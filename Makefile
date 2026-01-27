@@ -1,20 +1,22 @@
 CC = gcc
-CFLAGS = -O2 -Wall -Wextra -D_GNU_SOURCE
+CFLAGS = -O2 -Wall
 LDFLAGS = -lpthread
-
 TARGET = rkhunt
-SOURCE = src/rkhunt.c
+SRC = src/rkhunt.c
+PREFIX ?= /usr/local
 
 all: $(TARGET)
 
-$(TARGET): $(SOURCE)
-$(CC) $(CFLAGS) -o $(TARGET) $(SOURCE) $(LDFLAGS)
+$(TARGET): $(SRC)
+$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS)
+
+install: $(TARGET)
+install -m 755 $(TARGET) $(PREFIX)/bin/
+
+uninstall:
+rm -f $(PREFIX)/bin/$(TARGET)
 
 clean:
 rm -f $(TARGET)
 
-install: $(TARGET)
-cp $(TARGET) /usr/local/bin/rkhunt
-chmod 755 /usr/local/bin/rkhunt
-
-.PHONY: all clean install
+.PHONY: all install uninstall clean
