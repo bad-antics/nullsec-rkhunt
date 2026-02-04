@@ -13,7 +13,7 @@
 <p>
   <img src="https://img.shields.io/badge/rupurt-hunter-ff0000?style=for-the-badge&logo=target&logoColor=white" alt="rupurt">
   <img src="https://img.shields.io/badge/version-2.5.0-00ff00?style=for-the-badge" alt="Version">
-  <img src="https://img.shields.io/badge/signatures-250%2B-ff0000?style=for-the-badge" alt="Signatures">
+  <img src="https://img.shields.io/badge/signatures-280%2B-ff0000?style=for-the-badge" alt="Signatures">
   <img src="https://img.shields.io/badge/modules-15-blue?style=for-the-badge" alt="Modules">
   <img src="https://img.shields.io/badge/license-MIT-purple?style=for-the-badge" alt="License">
 </p>
@@ -65,7 +65,7 @@
 
 ### 📊 Signature Database
 
-- **250+ rootkit signatures** (Diamorphine, Reptile, Drovorub, etc.)
+- **280+ rootkit signatures** (Diamorphine, Reptile, Drovorub, etc.)
 - **APT implant detection** (Equation Group, Turla, Lazarus)
 - **Cryptominer detection** (XMRig, TeamTNT variants)
 - **Container-specific threats** (Siloscape, cr8escape)
