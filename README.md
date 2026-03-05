@@ -28,6 +28,20 @@
 
 ---
 
+## 🎬 Demo
+
+<div align="center">
+
+<img src="demo/demo.gif" alt="RKHunt Demo — scanning a Linux system for rootkits" width="800">
+
+<br>
+<sub>RKHunt quick-scanning a live system — detecting suspicious kernel modules, process anomalies, and tainted kernel flags</sub>
+
+</div>
+
+---
+
+
 ## 💻 Tech Stack
 
 ### Core
